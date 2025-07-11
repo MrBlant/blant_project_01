@@ -1,0 +1,10 @@
+#spring:
+#  messages:
+#    # 指定资源文件基础名称
+#    basename: international/message
+#    # 设置默认编码为UTF-8
+#    encoding: UTF-8
+#    # 开启缓存
+#    cache-duration: 3600
+#    #当找不到对应语言资源时是否回退到系统Locale
+#    fallback-to-system-locale: true
