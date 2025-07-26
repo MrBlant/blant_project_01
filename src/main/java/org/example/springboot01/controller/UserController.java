@@ -1,5 +1,7 @@
 package org.example.springboot01.controller;
 
+import com.blant.data.init.ext.MayiktErrorLog;
+import com.blant.data.init.wx.mp.config.WxMpProperties;
 import org.example.springboot01.entity.UserModel;
 import org.example.springboot01.internation.MessageUtils;
 import org.example.springboot01.service.UserService;
@@ -15,29 +17,29 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 @Controller
+@MayiktErrorLog
 public class UserController {
 
     @Autowired
-            @Resource
-    UserService userService;
-    LocaleResolver localeResolver;
+    public UserService userService;
+    @Resource
+    public LocaleResolver localeResolver;
 
     /**
-     * @param lang
-     * http://localhost:8080/index
+     * @param lang http://localhost:8080/index
      * @return
      */
     @GetMapping("/index")
     @ResponseBody
     public String list(String lang) {
-        int i=10;
-        int j=10;
-        List<UserModel> list = userService.getUser();
+//        List<UserModel> list = userService.getUser();
         String msg = MessageUtils.get("greeting");
+        int q = 0 / 0;
 //        String[] params = {"zhm", "China"};
 //        String msg =MessageUtils.getMessage("testParam",params);
+        WxMpProperties aa = new WxMpProperties();
+        aa.setConfigs(null);
         return msg;
     }
 
@@ -77,6 +79,4 @@ public class UserController {
 //        localeResolver.setLocale(request, response, new Locale(lang)); // 设置新的语言环境到请求中
 //        return "redirect:/"; // 重定向到首页或其他页面，根据需要调整
 //    }
-
-
 }

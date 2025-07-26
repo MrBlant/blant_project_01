@@ -8,3 +8,20 @@
 #    cache-duration: 3600
 #    #当找不到对应语言资源时是否回退到系统Locale
 #    fallback-to-system-locale: true
+#
+#server:
+#  port: 8080
+#  name: blant-test
+
+mayikt:
+  redis-pwd: 123
+  redis-url: mayikt
+  ###配置微信公众号相关内容
+  givealarm:
+    configs:
+      - appId: wx5c43fde3c9733d9e
+        secret: b8b217126c33a5fb7074927d5e72a81a
+        token: mayikt
+server:
+  port: 8080
+  name: mayikt-member
