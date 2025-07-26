@@ -2,6 +2,7 @@ package org.example.springboot01.controller;
 
 import com.blant.data.init.ext.MayiktErrorLog;
 import com.blant.data.init.wx.mp.config.WxMpProperties;
+import org.example.springboot01.aspect.MayiktCurrentLimit;
 import org.example.springboot01.entity.UserModel;
 import org.example.springboot01.internation.MessageUtils;
 import org.example.springboot01.service.UserService;
@@ -79,4 +80,15 @@ public class UserController {
 //        localeResolver.setLocale(request, response, new Locale(lang)); // 设置新的语言环境到请求中
 //        return "redirect:/"; // 重定向到首页或其他页面，根据需要调整
 //    }
+
+    /**
+     * 限流自定义注解test
+     * @return
+     */
+    @GetMapping("/add")
+    @MayiktCurrentLimit(name = "add", token = 1)
+    @ResponseBody
+    public String add() {
+        return "my is add";
+    }
 }
