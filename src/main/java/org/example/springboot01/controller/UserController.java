@@ -1,5 +1,7 @@
 package org.example.springboot01.controller;
 
+import com.blant.data.init.ext.MayiktErrorLog;
+import com.blant.data.init.wx.mp.config.WxMpProperties;
 import org.example.springboot01.entity.UserModel;
 import org.example.springboot01.internation.MessageUtils;
 import org.example.springboot01.service.UserService;
@@ -15,27 +17,29 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 @Controller
+@MayiktErrorLog
 public class UserController {
 
     @Autowired
-            @Resource
-    UserService userService;
-    LocaleResolver localeResolver;
+    public UserService userService;
+    @Resource
+    public LocaleResolver localeResolver;
 
     /**
-     * @param lang
-     * http://localhost:8080/index
+     * @param lang http://localhost:8080/index
      * @return
      */
     @GetMapping("/index")
     @ResponseBody
     public String list(String lang) {
-        List<UserModel> list = userService.getUser();
+//        List<UserModel> list = userService.getUser();
         String msg = MessageUtils.get("greeting");
+        int q = 0 / 0;
 //        String[] params = {"zhm", "China"};
 //        String msg =MessageUtils.getMessage("testParam",params);
+        WxMpProperties aa = new WxMpProperties();
+        aa.setConfigs(null);
         return msg;
     }
 
