@@ -49,16 +49,31 @@
 <!--            <version>你的AspectJ版本</version>-->
         </dependency>
 
-        <dependency>
-            <groupId>com.blant</groupId>
-            <artifactId>data-init-spring-boot-starter</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--自定义springboot插件-->
+<!--        <dependency>-->
+<!--            <groupId>com.blant</groupId>-->
+<!--            <artifactId>data-init-spring-boot-starter</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
+        </dependency>
+
+        <!-- Guava library -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.1.2-jre</version> <!-- 使用最新版本 -->
+        </dependency>
+
+        <!--引入fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
         </dependency>
 
     </dependencies>
