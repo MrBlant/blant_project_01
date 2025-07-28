@@ -1,7 +1,7 @@
 package org.example.springboot01.controller;
 
-import com.blant.data.init.ext.MayiktErrorLog;
-import com.blant.data.init.wx.mp.config.WxMpProperties;
+//import com.blant.data.init.ext.MayiktErrorLog;
+//import com.blant.data.init.wx.mp.config.WxMpProperties;
 import org.example.springboot01.aspect.MayiktCurrentLimit;
 import org.example.springboot01.entity.UserModel;
 import org.example.springboot01.internation.MessageUtils;
@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Controller
-@MayiktErrorLog
+//@MayiktErrorLog
 public class UserController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class UserController {
     public LocaleResolver localeResolver;
 
     /**
-     * @param lang http://localhost:8080/index
+     * @param lang http://localhost:8080/getUserInfo
      * @return
      */
     @GetMapping("/index")
@@ -39,20 +39,22 @@ public class UserController {
         int q = 0 / 0;
 //        String[] params = {"zhm", "China"};
 //        String msg =MessageUtils.getMessage("testParam",params);
-        WxMpProperties aa = new WxMpProperties();
-        aa.setConfigs(null);
         return msg;
     }
 
-    @GetMapping("/index2")
+    /**
+     * http://localhost:8080/getUserInfo
+     * @param lang
+     * @return
+     */
+    @GetMapping("/getUserInfo")
     @ResponseBody
     public String list2(String lang) {
-
         List<UserModel> list = userService.getUser();
-        String msg = MessageUtils.get("greeting");
+//        String msg = MessageUtils.get("greeting");
 //        String[] params = {"zhm", "China"};
 //        String msg =MessageUtils.getMessage("testParam",params);
-        return msg;
+        return "success";
     }
 
     @PostMapping("/update")
