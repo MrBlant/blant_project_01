@@ -32,6 +32,7 @@ public class UserController {
     @GetMapping("/index")
     @ResponseBody
     public String list(String lang) {
+        int i=10;
         List<UserModel> list = userService.getUser();
         String msg = MessageUtils.get("greeting");
 //        String[] params = {"zhm", "China"};
@@ -75,4 +76,6 @@ public class UserController {
 //        localeResolver.setLocale(request, response, new Locale(lang)); // 设置新的语言环境到请求中
 //        return "redirect:/"; // 重定向到首页或其他页面，根据需要调整
 //    }
+
+
 }
