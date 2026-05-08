@@ -33,6 +33,7 @@ public class UserController {
     @ResponseBody
     public String list(String lang) {
         int i=10;
+        int j=10;
         List<UserModel> list = userService.getUser();
         String msg = MessageUtils.get("greeting");
 //        String[] params = {"zhm", "China"};
