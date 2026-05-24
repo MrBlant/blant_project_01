@@ -124,7 +124,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>org.example.springboot01.Springboot01Application</mainClass>
+                    <mainClass>org.example.springboot.SpringbootApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
