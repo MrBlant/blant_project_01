@@ -3,15 +3,19 @@ package org.example.springboot.service.log;
 import java.io.*;
 import java.nio.channels.FileChannel;
 
+/**
+ * 文件操作工具类
+ * 提供文件的判断、重命名、拷贝、读写等基础操作
+ */
 public class FileUtils {
 
-    /*判断文件是否存在*/
+    /** 判断文件或目录是否存在 */
     public static boolean isExists(String filePath) {
         File file = new File(filePath);
         return file.exists();
     }
 
-    /*判断是否是文件夹*/
+    /** 判断路径是否为目录 */
     public static boolean isDir(String path) {
         File file = new File(path);
         if (file.exists()) {
@@ -22,34 +26,31 @@ public class FileUtils {
     }
 
     /**
-     * 文件或者目录重命名
+     * 文件或目录重命名
      *
      * @param oldFilePath 旧文件路径
-     * @param newName     新的文件名,可以是单个文件名和绝对路径
-     * @return
+     * @param newName     新的文件名（可以是单个文件名或绝对路径）
+     * @return 是否重命名成功
      */
     public static boolean renameTo(String oldFilePath, String newName) {
         try {
             File oldFile = new File(oldFilePath);
-            //若文件存在
             if (oldFile.exists()) {
-                //判断是全路径还是文件名
+                // 判断是单文件名还是全路径
                 if (newName.indexOf("/") < 0 && newName.indexOf("\\") < 0) {
-                    //单文件名，判断是windows还是Linux系统
                     String absolutePath = oldFile.getAbsolutePath();
                     if (newName.indexOf("/") > 0) {
-                        //Linux系统
+                        // Linux 系统
                         newName = absolutePath.substring(0, absolutePath.lastIndexOf("/") + 1) + newName;
                     } else {
+                        // Windows 系统
                         newName = absolutePath.substring(0, absolutePath.lastIndexOf("\\") + 1) + newName;
                     }
                 }
                 File file = new File(newName);
-                //判断重命名后的文件是否存在
                 if (file.exists()) {
                     System.out.println("该文件已存在,不能重命名");
                 } else {
-                    //不存在，重命名
                     return oldFile.renameTo(file);
                 }
             } else {
@@ -61,8 +62,12 @@ public class FileUtils {
         return false;
     }
 
-
-    /*文件拷贝操作*/
+    /**
+     * 文件拷贝（基于 NIO FileChannel 实现）
+     *
+     * @param sourceFile 源文件路径
+     * @param targetFile 目标文件路径
+     */
     public static void copy(String sourceFile, String targetFile) {
         File source = new File(sourceFile);
         File target = new File(targetFile);
@@ -74,32 +79,25 @@ public class FileUtils {
         try {
             fis = new FileInputStream(source);
             fos = new FileOutputStream(target);
-            in = fis.getChannel();//得到对应的文件通道
-            out = fos.getChannel();//得到对应的文件通道
-            in.transferTo(0, in.size(), out);//连接两个通道，并且从in通道读取，然后写入out通道
+            in = fis.getChannel();
+            out = fos.getChannel();
+            // 使用 transferTo 实现零拷贝，效率高于传统流复制
+            in.transferTo(0, in.size(), out);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (out != null) {
-                    out.close();
-                }
-                if (in != null) {
-                    in.close();
-                }
-                if (fos != null) {
-                    fos.close();
-                }
-                if (fis != null) {
-                    fis.close();
-                }
+                if (out != null) out.close();
+                if (in != null) in.close();
+                if (fos != null) fos.close();
+                if (fis != null) fis.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /*读取Text文件操作*/
+    /** 读取文本文件内容 */
     public static String readText(String filePath) {
         String lines = "";
         try {
@@ -115,7 +113,13 @@ public class FileUtils {
         return lines;
     }
 
-    /*写入Text文件操作*/
+    /**
+     * 写入文本文件
+     *
+     * @param filePath  文件路径
+     * @param content   写入内容
+     * @param isAppend  是否追加模式
+     */
     public static void writeText(String filePath, String content, boolean isAppend) {
         FileOutputStream outputStream = null;
         OutputStreamWriter outputStreamWriter = null;
@@ -130,15 +134,9 @@ public class FileUtils {
             e.printStackTrace();
         } finally {
             try {
-                if (bufferedWriter != null) {
-                    bufferedWriter.close();
-                }
-                if (outputStreamWriter != null) {
-                    outputStreamWriter.close();
-                }
-                if (outputStream != null) {
-                    outputStream.close();
-                }
+                if (bufferedWriter != null) bufferedWriter.close();
+                if (outputStreamWriter != null) outputStreamWriter.close();
+                if (outputStream != null) outputStream.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,9 @@
 package org.example.springboot.entity;
 
+/**
+ * 用户模型类（简单 POJO，用于演示）
+ * 包含用户名和年龄两个基本字段
+ */
 public class UserModel {
     String userName;
     int age;

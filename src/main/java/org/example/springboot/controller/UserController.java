@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * 用户管理 REST 控制器
+ * 提供用户的 CRUD 操作接口，以及国际化切换、限流测试等接口
+ */
 @RestController
 @RequestMapping("/api/users")
-//@MayiktErrorLog
 public class UserController {
 
     @Autowired
@@ -32,8 +35,7 @@ public class UserController {
 
     /**
      * 查询所有用户
-     * http://localhost:8080/api/users
-     * @return 用户列表
+     * GET /api/users
      */
     @GetMapping
     public ResponseEntity<Map<String, Object>> list() {
@@ -52,9 +54,8 @@ public class UserController {
     }
 
     /**
-     * 根据ID查询用户
-     * @param id 用户ID
-     * @return 用户信息
+     * 根据 ID 查询用户
+     * GET /api/users/{id}
      */
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable Long id) {
@@ -81,8 +82,7 @@ public class UserController {
 
     /**
      * 根据用户名查询用户
-     * @param username 用户名
-     * @return 用户信息
+     * GET /api/users/username/{username}
      */
     @GetMapping("/username/{username}")
     public ResponseEntity<Map<String, Object>> getByUsername(@PathVariable String username) {
@@ -109,8 +109,8 @@ public class UserController {
 
     /**
      * 创建用户
-     * @param user 用户信息
-     * @return 创建结果
+     * POST /api/users
+     * 创建前会检查用户名是否已存在
      */
     @PostMapping
     public ResponseEntity<Map<String, Object>> create(@RequestBody User user) {
@@ -122,7 +122,7 @@ public class UserController {
                 result.put("message", "用户名已存在");
                 return ResponseEntity.badRequest().body(result);
             }
-            
+
             User savedUser = userService.save(user);
             result.put("code", 200);
             result.put("message", "创建成功");
@@ -136,10 +136,8 @@ public class UserController {
     }
 
     /**
-     * 更新用户
-     * @param id 用户ID
-     * @param user 用户信息
-     * @return 更新结果
+     * 更新用户信息
+     * PUT /api/users/{id}
      */
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> update(@PathVariable Long id, @RequestBody User user) {
@@ -160,8 +158,7 @@ public class UserController {
 
     /**
      * 删除用户
-     * @param id 用户ID
-     * @return 删除结果
+     * DELETE /api/users/{id}
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
@@ -179,8 +176,8 @@ public class UserController {
     }
 
     /**
-     * 限流自定义注解test
-     * @return
+     * 限流测试接口（演示 @MayiktCurrentLimit 注解）
+     * 配置为每秒仅允许 1 个请求通过
      */
     @GetMapping("/add")
     @MayiktCurrentLimit(name = "add", token = 1)
@@ -188,31 +185,33 @@ public class UserController {
         return "my is add";
     }
 
-
     public void LanguageSwitchController(LocaleResolver localeResolver) {
         this.localeResolver = localeResolver;
     }
 
+    /**
+     * 手动切换语言
+     * GET /api/users/switchLang?lang=zh_CN
+     */
     @GetMapping("/switchLang")
     public String switchLanguage(HttpServletRequest request, HttpServletResponse response, @RequestParam String lang) {
-        localeResolver.setLocale(request, response, new Locale(lang)); // 设置新的语言环境到请求中
-        return "redirect:/"; // 重定向到首页或其他页面，根据需要调整
+        localeResolver.setLocale(request, response, new Locale(lang));
+        return "redirect:/";
     }
 
     /**
      * 国际化测试接口
-     * @param lang 语言参数
-     * @return 国际化消息
+     * GET /api/users/index
+     * 返回当前语言环境下的 greeting 翻译文本
      */
     @GetMapping("/index")
     public String index(String lang) {
-        String msg = MessageUtils.get("greeting");
-        return msg;
+        return MessageUtils.get("greeting");
     }
-    
+
     /**
-     * 获取用户信息（旧接口，保留以兼容）
-     * @return 成功消息
+     * 旧接口，保留以兼容
+     * GET /api/users/getUserInfo
      */
     @GetMapping("/getUserInfo")
     public String getUserInfo() {
